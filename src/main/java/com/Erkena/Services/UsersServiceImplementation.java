@@ -1,8 +1,8 @@
 package com.Erkena.Services;
 
+import com.Erkena.DTO.UserDto;
 import com.Erkena.Entities.Users;
 import com.Erkena.Exceptions.NotFoundException;
-import com.Erkena.Exceptions.UserExceptions;
 import com.Erkena.Interfaces.IUsersService;
 import com.Erkena.Repositories.UsersRepository;
 import lombok.AllArgsConstructor;
@@ -26,8 +26,13 @@ public class UsersServiceImplementation implements IUsersService {
     }
 
     @Override
-    public Users updateUser(Users user) {
-        return usersRepository.save(user);
+    public Users updateUser(UserDto payload) {
+        Users foundUser = usersRepository.findUsersByUsername(payload.getUsername());
+        System.out.println(foundUser.getUsername());
+        foundUser.setEmail(payload.getEmail());
+        foundUser.setPassword(payload.getPassword());
+        foundUser.setUpdateAt(payload.getUpdateAt());
+        return usersRepository.save(foundUser);
     }
 
     @Override

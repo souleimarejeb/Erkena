@@ -1,5 +1,6 @@
 package com.Erkena.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class Posts {
 
     LocalDate updateAt;
 
+    @JsonIgnore
     @ManyToOne
     Users user;
 

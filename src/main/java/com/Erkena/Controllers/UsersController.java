@@ -1,5 +1,6 @@
 package com.Erkena.Controllers;
 
+import com.Erkena.DTO.UserDto;
 import com.Erkena.Entities.Users;
 import com.Erkena.Interfaces.IUsersService;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,7 @@ public class UsersController {
     }
 
     @PatchMapping("/upadate-user")
-    public ResponseEntity<Users> updateUser(@RequestBody Users payload)
+    public ResponseEntity<Users> updateUser(@RequestBody UserDto payload)
     {
         Users updatedUser= usersService.updateUser(payload);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);
@@ -41,10 +42,9 @@ public class UsersController {
     }
 
     @DeleteMapping("/delete-user/{userId}")
-    public   ResponseEntity<Void>  deleteUser(@PathVariable("userId") int param){
+    public ResponseEntity<Void>  deleteUser(@PathVariable("userId") int param){
         usersService.deleteUser(param);
         return ResponseEntity.ok().build();
     }
-
 
 }
