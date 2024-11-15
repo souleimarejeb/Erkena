@@ -23,6 +23,11 @@ public class PostsController {
         List<Posts> newPost= postService.getPosts();
         return newPost;
     }
+    @GetMapping("/one-post/{postId}")
+    public Posts findPostById(@PathVariable("postId")int postId)
+    {
+         return postService.findPostById(postId);
+    }
 
     @PostMapping("/add-post/{idUser}")
     public ResponseEntity<Posts> addPost(

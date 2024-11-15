@@ -19,7 +19,7 @@ public class PostServiceImplementation implements IPostService {
     UsersRepository usersRepository;
 
     @Override
-        public Posts addPost(Posts posts , int idUser) {
+    public Posts addPost(Posts posts , int idUser) {
         Users user = usersRepository.findById(idUser)
                 .orElseThrow(() -> new NotFoundException("Requested User Not Found"));
         posts.setUser(user);
@@ -28,6 +28,7 @@ public class PostServiceImplementation implements IPostService {
 
     @Override
     public void deletePost(int idPost) {
+
         postsRepository.deleteById(idPost);
     }
 
@@ -40,7 +41,6 @@ public class PostServiceImplementation implements IPostService {
 
         return postsRepository.save(foundPost);
     }
-
     @Override
     public List<Posts> getPosts() {
         return postsRepository.findAll();
@@ -48,6 +48,6 @@ public class PostServiceImplementation implements IPostService {
 
     @Override
     public Posts findPostById(int idPost) {
-        return null;
+        return postsRepository.findPostsByIdById(idPost);
     }
 }
