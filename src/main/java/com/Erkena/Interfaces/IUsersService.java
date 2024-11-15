@@ -1,5 +1,6 @@
 package com.Erkena.Interfaces;
 
+import com.Erkena.DTO.UserDto;
 import com.Erkena.Entities.Users;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface IUsersService {
 
     void deleteUser(int idUser);
 
-    Users updateUser(Users user);
+    Users updateUser(UserDto user);
 
     List<Users> getUsers();
 
