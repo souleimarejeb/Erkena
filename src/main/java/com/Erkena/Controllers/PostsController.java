@@ -24,11 +24,11 @@ public class PostsController {
         return newPost;
     }
     @GetMapping("/one-post/{postId}")
-    public Posts findPostById(@PathVariable("postId")int postId)
+    public ResponseEntity<Posts> findPostById(@PathVariable("postId")int postId)
     {
-         return postService.findPostById(postId);
+         return ResponseEntity.ok(postService.findPostById(postId));
     }
-
+//Request entity ( record)  instead of Pathvariable -
     @PostMapping("/add-post/{idUser}")
     public ResponseEntity<Posts> addPost(
             @RequestBody Posts payload,

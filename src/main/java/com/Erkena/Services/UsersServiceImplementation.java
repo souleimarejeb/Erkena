@@ -34,13 +34,11 @@ public class UsersServiceImplementation implements IUsersService {
         foundUser.setUpdateAt(payload.getUpdateAt());
         return usersRepository.save(foundUser);
     }
-
     @Override
     public List<Users> getUsers() {
 
         return usersRepository.findAll();
     }
-
     @Override
     public Users findUserById(int idUser) {
         if(usersRepository.findById(idUser).isEmpty()){

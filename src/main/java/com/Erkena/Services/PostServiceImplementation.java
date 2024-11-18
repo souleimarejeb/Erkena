@@ -34,7 +34,7 @@ public class PostServiceImplementation implements IPostService {
 
     @Override
     public Posts updatePosts(PostDto postDto ) {
-        Posts foundPost = postsRepository.findPostsByIdById(postDto.getPostId());
+        Posts foundPost = postsRepository.findById(postDto.getPostId()).get();
         foundPost.setTitle(postDto.getTitle());
         foundPost.setContent(postDto.getContent());
         foundPost.setUpdateAt(postDto.getUpdateAt());
@@ -48,6 +48,6 @@ public class PostServiceImplementation implements IPostService {
 
     @Override
     public Posts findPostById(int idPost) {
-        return postsRepository.findPostsByIdById(idPost);
+        return postsRepository.findById(idPost).get();
     }
 }
