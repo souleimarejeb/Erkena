@@ -10,9 +10,9 @@ public interface IPostService {
 
     void deletePost(int idPost);
 
-    Posts updatePosts(PostDto post);
+    PostDto updatePosts(PostDto post);
 
-    List<Posts> getPosts();
+    List<PostDto> getPosts();
 
-    Posts findPostById(int idPost);
+    PostDto findPostById(int idPost);
 }

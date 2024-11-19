@@ -18,7 +18,7 @@ public class UsersController {
     private final IUsersService usersService;
 
     @GetMapping("/all-users")
-    public List<Users> getUsers(){
+    public List<UserDto> getUsers(){
         return   usersService.getUsers();
     }
 
@@ -30,14 +30,13 @@ public class UsersController {
     }
 
     @PatchMapping("/upadate-user")
-    public ResponseEntity<Users> updateUser(@RequestBody UserDto payload)
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto payload)
     {
-        Users updatedUser= usersService.updateUser(payload);
-        return new ResponseEntity<>(updatedUser,HttpStatus.OK);
+        return ResponseEntity.ok(usersService.updatedUser(payload));
     }
 
     @GetMapping("/get-user/{userId}")
-    public  Users findUserByID(@PathVariable("userId") int param){
+    public  UserDto findUserByID(@PathVariable("userId") int param){
          return usersService.findUserById(param);
     }
 

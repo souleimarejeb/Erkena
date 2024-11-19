@@ -1,53 +1,57 @@
-package com.Erkena.Services;
+    package com.Erkena.Services;
 
-import com.Erkena.DTO.PostDto;
-import com.Erkena.Entities.Posts;
-import com.Erkena.Entities.Users;
-import com.Erkena.Exceptions.NotFoundException;
-import com.Erkena.Interfaces.IPostService;
-import com.Erkena.Repositories.PostsRepository;
-import com.Erkena.Repositories.UsersRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+    import com.Erkena.DTO.PostDto;
+    import com.Erkena.DTO.PostMapperDto;
+    import com.Erkena.Entities.Posts;
+    import com.Erkena.Entities.Users;
+    import com.Erkena.Exceptions.NotFoundException;
+    import com.Erkena.Interfaces.IPostService;
+    import com.Erkena.Repositories.PostsRepository;
+    import com.Erkena.Repositories.UsersRepository;
+    import lombok.AllArgsConstructor;
+    import org.springframework.stereotype.Service;
 
-import java.util.List;
+    import java.util.List;
+    import java.util.Optional;
 
-@Service
-@AllArgsConstructor
-public class PostServiceImplementation implements IPostService {
-    PostsRepository postsRepository;
-    UsersRepository usersRepository;
+    @Service
+    @AllArgsConstructor
+    public class PostServiceImplementation implements IPostService {
+        private final PostsRepository postsRepository;
+        private final UsersRepository usersRepository;
+        private final PostMapperDto postMapperDto;
 
-    @Override
-    public Posts addPost(Posts posts , int idUser) {
-        Users user = usersRepository.findById(idUser)
-                .orElseThrow(() -> new NotFoundException("Requested User Not Found"));
-        posts.setUser(user);
-        return postsRepository.save(posts);
+        @Override
+        public Posts addPost(Posts posts , int idUser) {
+            Users user = usersRepository.findById(idUser)
+                    .orElseThrow(() -> new NotFoundException("Requested User Not Found"));
+            posts.setUser(user);
+            return postsRepository.save(posts);
+            }
+
+        @Override
+        public void deletePost(int idPost) {
+            postsRepository.deleteById(idPost);
         }
 
-    @Override
-    public void deletePost(int idPost) {
+        @Override
+        public PostDto updatePosts(PostDto postDto ) {
 
-        postsRepository.deleteById(idPost);
-    }
+            Posts updateEntity = postMapperDto.toEntity(postDto);
+            Posts post = postsRepository.save(updateEntity);
+            return postMapperDto.toDTO(post);
+        }
+        @Override
+        public List<PostDto> getPosts() {
+            List<Posts> posts= postsRepository.findAll();
 
-    @Override
-    public Posts updatePosts(PostDto postDto ) {
-        Posts foundPost = postsRepository.findById(postDto.getPostId()).get();
-        foundPost.setTitle(postDto.getTitle());
-        foundPost.setContent(postDto.getContent());
-        foundPost.setUpdateAt(postDto.getUpdateAt());
+            return postMapperDto.toDTO(posts);
+        }
 
-        return postsRepository.save(foundPost);
-    }
-    @Override
-    public List<Posts> getPosts() {
-        return postsRepository.findAll();
-    }
+        @Override
+        public PostDto findPostById(int idPost) {
 
-    @Override
-    public Posts findPostById(int idPost) {
-        return postsRepository.findById(idPost).get();
+           Optional<Posts> post= postsRepository.findById(idPost);
+            return postMapperDto.toDTO(post.get());
+        }
     }
-}

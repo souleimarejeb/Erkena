@@ -10,10 +10,10 @@ public interface IUsersService {
 
     void deleteUser(int idUser);
 
-    Users updateUser(UserDto user);
+    UserDto updatedUser(UserDto user);
 
-    List<Users> getUsers();
+    List<UserDto> getUsers();
 
-    Users findUserById(int idUser);
+    UserDto findUserById(int idUser);
 
 }

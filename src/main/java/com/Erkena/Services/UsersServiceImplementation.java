@@ -1,6 +1,7 @@
 package com.Erkena.Services;
 
 import com.Erkena.DTO.UserDto;
+import com.Erkena.DTO.UserMapperDto;
 import com.Erkena.Entities.Users;
 import com.Erkena.Exceptions.NotFoundException;
 import com.Erkena.Interfaces.IUsersService;
@@ -9,12 +10,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class UsersServiceImplementation implements IUsersService {
 
-    UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
+    private final UserMapperDto userMapperDto;
     @Override
     public Users addUser(Users user) {
         return usersRepository.save(user);
@@ -26,24 +29,22 @@ public class UsersServiceImplementation implements IUsersService {
     }
 
     @Override
-    public Users updateUser(UserDto payload) {
-        Users foundUser = usersRepository.findUsersByUsername(payload.getUsername());
-        System.out.println(foundUser.getUsername());
-        foundUser.setEmail(payload.getEmail());
-        foundUser.setPassword(payload.getPassword());
-        foundUser.setUpdateAt(payload.getUpdateAt());
-        return usersRepository.save(foundUser);
+    public UserDto updatedUser(UserDto payload) {
+        Users updatedEntity = userMapperDto.toEntity(payload);
+        Users savedPost = usersRepository.save(updatedEntity);
+        return userMapperDto.toDTO(savedPost);
     }
     @Override
-    public List<Users> getUsers() {
-
-        return usersRepository.findAll();
+    public List<UserDto> getUsers() {
+        List<Users> users = usersRepository.findAll();
+        return userMapperDto.toDTO(users);
     }
     @Override
-    public Users findUserById(int idUser) {
+    public UserDto findUserById(int idUser) {
         if(usersRepository.findById(idUser).isEmpty()){
             throw  new NotFoundException("Requested User Not Found ");
         }
-        return usersRepository.findById(idUser).orElse(null);
+        Optional<Users> user =usersRepository.findById(idUser);
+        return userMapperDto.toDTO(user.get());
     }
 }

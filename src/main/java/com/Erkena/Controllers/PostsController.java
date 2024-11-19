@@ -16,17 +16,15 @@ import java.util.List;
 public class PostsController {
 
     public final IPostService postService;
-
     @GetMapping("/allposts")
-    public List<Posts> GetPosts()
+    public List<PostDto> GetPosts()
     {
-        List<Posts> newPost= postService.getPosts();
-        return newPost;
+        return postService.getPosts();
     }
     @GetMapping("/one-post/{postId}")
-    public ResponseEntity<Posts> findPostById(@PathVariable("postId")int postId)
+    public ResponseEntity<PostDto> findPostById(@PathVariable("postId")int postId)
     {
-         return ResponseEntity.ok(postService.findPostById(postId));
+        return ResponseEntity.ok(postService.findPostById(postId));
     }
 //Request entity ( record)  instead of Pathvariable -
     @PostMapping("/add-post/{idUser}")
@@ -46,7 +44,7 @@ public class PostsController {
     }
 
     @PatchMapping ("/update-post")
-    public Posts updatePost(@RequestBody PostDto payload)
+    public PostDto updatePost(@RequestBody PostDto payload)
     {
         return postService.updatePosts(payload);
     }
