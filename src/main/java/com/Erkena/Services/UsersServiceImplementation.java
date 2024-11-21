@@ -18,6 +18,7 @@ public class UsersServiceImplementation implements IUsersService {
 
     private final UsersRepository usersRepository;
     private final UserMapperDto userMapperDto;
+
     @Override
     public Users addUser(Users user) {
         return usersRepository.save(user);
@@ -34,17 +35,17 @@ public class UsersServiceImplementation implements IUsersService {
         Users savedPost = usersRepository.save(updatedEntity);
         return userMapperDto.toDTO(savedPost);
     }
+
     @Override
     public List<UserDto> getUsers() {
         List<Users> users = usersRepository.findAll();
         return userMapperDto.toDTO(users);
     }
+
     @Override
     public UserDto findUserById(int idUser) {
-        if(usersRepository.findById(idUser).isEmpty()){
-            throw  new NotFoundException("Requested User Not Found ");
-        }
-        Optional<Users> user =usersRepository.findById(idUser);
-        return userMapperDto.toDTO(user.get());
+        Users user = usersRepository.findById(idUser)
+                .orElseThrow(() -> new NotFoundException("Requested User Not Found"));
+        return userMapperDto.toDTO(user);
     }
 }

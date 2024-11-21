@@ -36,6 +36,9 @@ public class Users  {
         @OneToMany(mappedBy = "user")
         List<Posts> posts;
 
+        @OneToMany(mappedBy = "user")
+        List<Comments> comments;
+
         @PrePersist
         void beforeInsert(){
                 createdAt = LocalDate.now();

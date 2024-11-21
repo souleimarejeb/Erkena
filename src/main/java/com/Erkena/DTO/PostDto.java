@@ -1,30 +1,30 @@
-package com.Erkena.DTO;
+    package com.Erkena.DTO;
 
 
-import jakarta.persistence.PreUpdate;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+    import jakarta.persistence.PreUpdate;
+    import lombok.AllArgsConstructor;
+    import lombok.Getter;
+    import lombok.NoArgsConstructor;
+    import lombok.Setter;
 
-import java.time.LocalDate;
+    import java.time.LocalDate;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class PostDto {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public class PostDto {
 
-    int postId ;
-    private String title;
+        int postId ;
+        private String title;
 
-    private String content;
+        private String content;
 
-    private LocalDate updateAt;
+        private LocalDate updateAt;
 
-    @PreUpdate
-    void beforeUpdate() {
-        updateAt = LocalDate.now();
+        @PreUpdate
+        void beforeUpdate() {
+            updateAt = LocalDate.now();
+        }
+
     }
-
-}

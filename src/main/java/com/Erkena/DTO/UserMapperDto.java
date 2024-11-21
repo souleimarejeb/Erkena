@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = {UserDto.class})
 public interface UserMapperDto {
     UserDto toDTO(Users user);
     Users toEntity(UserDto userDto);

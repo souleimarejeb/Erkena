@@ -41,17 +41,27 @@
             Posts post = postsRepository.save(updateEntity);
             return postMapperDto.toDTO(post);
         }
-        @Override
         public List<PostDto> getPosts() {
-            List<Posts> posts= postsRepository.findAll();
+            List<Posts> posts = postsRepository.findAll();
 
-            return postMapperDto.toDTO(posts);
+            // Log the Posts data to ensure it is correctly fetched from the DB
+            posts.forEach(post -> {
+                System.out.println("Post: " + post.getPostId() + ", Title: " + post.getTitle());
+            });
+            List<PostDto> postDtos = postMapperDto.toDTO(posts);
+
+            // Log the result after mapping
+            postDtos.forEach(postDto -> {
+                System.out.println("Mapped PostDto - Post ID: " + postDto.getPostId() + ", Title: " + postDto.getTitle() + ", Content: " + postDto.getContent());
+            });
+            return postDtos;
         }
 
         @Override
         public PostDto findPostById(int idPost) {
 
            Optional<Posts> post= postsRepository.findById(idPost);
+            System.out.println(post.get());
             return postMapperDto.toDTO(post.get());
         }
     }
