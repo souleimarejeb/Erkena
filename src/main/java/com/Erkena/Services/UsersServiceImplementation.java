@@ -4,13 +4,13 @@ import com.Erkena.DTO.UserDto;
 import com.Erkena.DTO.UserMapperDto;
 import com.Erkena.Entities.Users;
 import com.Erkena.Exceptions.NotFoundException;
+import com.Erkena.Exceptions.UserAlreadyExistsException;
 import com.Erkena.Interfaces.IUsersService;
 import com.Erkena.Repositories.UsersRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,6 +21,10 @@ public class UsersServiceImplementation implements IUsersService {
 
     @Override
     public Users addUser(Users user) {
+        Users foundUser= usersRepository.findUsersByUsername(user.getUsername());
+        if (foundUser!= null){
+            throw  new UserAlreadyExistsException("User with username '" + user.getUsername() + "' already exists");
+        }
         return usersRepository.save(user);
     }
 

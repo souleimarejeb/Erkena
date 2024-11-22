@@ -17,9 +17,9 @@ public class PostsController {
 
     public final IPostService postService;
     @GetMapping("/allposts")
-    public List<PostDto> GetPosts()
+    public ResponseEntity<List<PostDto>> GetPosts()
     {
-        return postService.getPosts();
+        return ResponseEntity.ok(postService.getPosts());
     }
     @GetMapping("/one-post/{postId}")
     public ResponseEntity<PostDto> findPostById(@PathVariable("postId")int postId)
@@ -40,12 +40,12 @@ public class PostsController {
     public ResponseEntity<Posts> deletePost(@PathVariable("idPost")int idPost)
     {
          postService.deletePost(idPost);
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping ("/update-post")
-    public PostDto updatePost(@RequestBody PostDto payload)
+    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto payload)
     {
-        return postService.updatePosts(payload);
+        return ResponseEntity.ok(postService.updatePosts(payload));
     }
 }

@@ -19,4 +19,15 @@ public class UserExcepetionHandler {
     );
                 return new ResponseEntity<>(userException,HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(value = {UserAlreadyExistsException.class})
+    public ResponseEntity<Object> handleFoundException
+            (UserAlreadyExistsException userAlreadyExistsException)
+    {
+        UserExceptions userException = new UserExceptions(
+                userAlreadyExistsException.getMessage(),
+                userAlreadyExistsException.getCause(),
+                HttpStatus.FOUND
+        );
+        return new ResponseEntity<>(userException,HttpStatus.FOUND);
+    }
 }

@@ -20,14 +20,14 @@ public class UsersController {
     private final IUsersService usersService;
 
     @GetMapping("/all-users")
-    public List<UserDto> getUsers() {
-        return usersService.getUsers();
+    public ResponseEntity<List<UserDto>> getUsers() {
+        return ResponseEntity.ok(usersService.getUsers());
     }
 
     @PostMapping("/add-user")
     public ResponseEntity<Users> addUser(@RequestBody Users payload) {
-        Users newUser = usersService.addUser(payload);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(usersService.addUser(payload), HttpStatus.CREATED);
     }
 
     @PatchMapping("/upadate-user")
@@ -36,8 +36,9 @@ public class UsersController {
     }
 
     @GetMapping("/get-user/{userId}")
-    public UserDto findUserByID(@PathVariable("userId") int param) {
-        return usersService.findUserById(param);
+    public ResponseEntity<UserDto> findUserByID(@PathVariable("userId") int param) {
+        usersService.findUserById(param);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete-user/{userId}")
