@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {PostDto.class})
+@Mapper(componentModel = "spring")
 public interface PostMapperDto {
     PostDto toDTO(Posts post);
     Posts toEntity(PostDto postDto);

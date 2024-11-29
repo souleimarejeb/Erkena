@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {CommentDto.class})
+@Mapper(componentModel = "spring")
 public interface CommentMapperDto {
     CommentDto toDTO(Comments comments);
     Comments toEntity(CommentDto commentDto);

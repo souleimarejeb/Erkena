@@ -25,7 +25,7 @@ public class UsersController {
     }
 
     @PostMapping("/add-user")
-    public ResponseEntity<Users> addUser(@RequestBody Users payload) {
+    public ResponseEntity<Users> addUser(@Valid@RequestBody Users payload) {
 
         return new ResponseEntity<>(usersService.addUser(payload), HttpStatus.CREATED);
     }

@@ -1,10 +1,11 @@
 package com.Erkena.DTO;
 
 import jakarta.persistence.PreUpdate;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+import org.mapstruct.Mapper;
 
 import java.time.LocalDate;
 
@@ -14,8 +15,12 @@ import java.time.LocalDate;
 @Setter
 public class UserDto {
 
+    @NotNull(message ="Username cannot be null ")
+    @Size(min = 3, message = "Username must have at least 3 characters")
     String username;
 
+    @NotNull(message ="Username cannot be null ")
+    @Email(message = "Invalid email format")
     String email;
 
     String password;
